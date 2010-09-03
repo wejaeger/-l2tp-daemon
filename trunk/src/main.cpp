@@ -1,8 +1,6 @@
 /*
  * $Id$
  *
- * $Id$
- *
  * File:   main.cpp
  * Author: Werner Jaeger
  *
@@ -13,5 +11,5 @@
 int main(int iArgc, char* pcaArgv[])
 {
    VpnControlDaemonApplication service(iArgc, pcaArgv);
-   return(service.exec());
+   return(service.daemonize());
 }

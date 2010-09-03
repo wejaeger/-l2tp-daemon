@@ -1,8 +1,6 @@
 /*
  * $Id$
  *
- * $Id$
- *
  * File:   VpnClientConnection.h
  * Author: Werner Jaeger
  *

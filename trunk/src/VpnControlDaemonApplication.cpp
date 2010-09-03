@@ -1,45 +1,148 @@
 /*
  * $Id$
  *
- * $Id$
- *
  * File:   VpnControlDaemonApplication.cpp
  * Author: Werner Jaeger
  *
  * Created on August 25, 2010, 4:57 PM
  */
 
-#include <QTextCodec>
+#include <QFile>
+#include <QByteArray>
+
+#include <fcntl.h>
+#include <signal.h>
+#include <sys/stat.h>
+#include <sys/syslog.h>
 
 #include "VpnControlDaemon.h"
 #include "VpnControlDaemonApplication.h"
 
 static const char* const KEY = "L2tpIPsecVpnControlDaemon";
+static const char* const DEVNULL = "/dev/null";
 
-VpnControlDaemonApplication::VpnControlDaemonApplication(int iArgc, char** ppArgv) : QtService<QCoreApplication>(iArgc, ppArgv, "L2tp over IPsec Control Daemon"),
-   m_Daemon(new VpnControlDaemon(KEY, application()))
+static QFile pidFile("/var/run/L2tpIPsecVpnControlDaemon.pid");
+
+
+static void terminationSignalhandler(int iSig)
 {
-   QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
-   QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+   if (iSig == SIGTERM || iSig == SIGINT)
+   {
+      qApp->quit();
+   }
+}
 
-   setServiceDescription("Executes various ipsec and xl2tp related start and stop commands on behalf of the L2tpIPsecVpn client");
-   setStartupType(QtServiceController::AutoStartup);
+VpnControlDaemonApplication::VpnControlDaemonApplication(int iArgc, char** ppArgv) : QCoreApplication(iArgc, ppArgv), m_pDaemon(new VpnControlDaemon(KEY))
+{
 }
 
 VpnControlDaemonApplication::~VpnControlDaemonApplication()
 {
+   delete m_pDaemon;
 }
 
-void VpnControlDaemonApplication::start()
+int VpnControlDaemonApplication::daemonize() const
 {
-   if (!m_Daemon->start())
+   int iRet(-1);
+
+   const pid_t pid(::fork());
+   if (pid >= 0)
    {
-      logMessage("Failed to start VPN Control Daemon", QtServiceBase::Error);
-      QCoreApplication::exit(3);
+      if (pid == 0)
+      {
+         ::syslog(LOG_INFO|LOG_DAEMON, "Starting %s", KEY);
+
+         if (createPidFile())
+         {
+            iRet = ::chdir("/");
+            if (iRet >= 0)
+            {
+               ::close(STDIN_FILENO);
+               if (::open(DEVNULL, O_RDWR) == STDIN_FILENO)
+               {
+                  if (::dup2(STDIN_FILENO, STDOUT_FILENO) == -1)
+                     ::syslog(LOG_CRIT|LOG_DAEMON, "Failed to redirect stdout to %s", DEVNULL);
+
+                  if (::dup2(STDIN_FILENO, STDERR_FILENO) == -1)
+                     ::syslog(LOG_CRIT|LOG_DAEMON, "Failed to redirect stderr to %s", DEVNULL);
+               }
+               else
+                  ::syslog(LOG_CRIT|LOG_DAEMON, "Failed to redirect stdin to %s", DEVNULL);
+
+               ::umask(0);
+               if (m_pDaemon->start())
+               {
+                  ::signal(SIGTERM, terminationSignalhandler);
+                  ::signal(SIGINT, terminationSignalhandler);
+                  ::syslog(LOG_INFO|LOG_DAEMON, "%s started", KEY);
+
+                  iRet = exec();
+
+                  ::syslog(LOG_INFO|LOG_DAEMON, "Stopping %s", KEY);
+
+                  if (pidFile.exists())
+                     pidFile.remove();
+
+                  ::syslog(LOG_INFO|LOG_DAEMON, "%s stopped", KEY);
+               }
+               else
+               {
+                  ::syslog(LOG_CRIT|LOG_DAEMON, "%s", "Failed to start daemon");
+                  iRet = 3;
+               }
+            }
+            else
+               ::syslog(LOG_CRIT|LOG_DAEMON, "Failed to change to root directory: %m");
+         }
+         else
+            iRet = 1;
+      }
+      else // parent
+         iRet = 0;
    }
+   else
+      ::syslog(LOG_CRIT|LOG_DAEMON, "Failed to fork daemon: %m");
+
+   return(iRet);
 }
 
-void VpnControlDaemonApplication::stop()
+bool VpnControlDaemonApplication::createPidFile()
 {
-   QCoreApplication::quit();
+   bool fRet(false);
+
+   if (pidFile.open(QIODevice::ReadWrite))
+   {
+      const QByteArray abPid(pidFile.readAll());
+      pidFile.close();
+
+      const int iPid(abPid.count() == 0 ? 0 : abPid.toInt());
+
+      if (!iPid || iPid == ::getpid() || ::kill(iPid, 0) != 0)
+      {
+         if (::setsid() >= 0)
+         {
+            if (pidFile.remove())
+            {
+               if (pidFile.open(QIODevice::WriteOnly))
+               {
+                  pidFile.write((QString::number(::getpid()) + '\n').toLatin1());
+                  pidFile.close();
+                  fRet = true;
+               }
+               else
+                  ::syslog(LOG_CRIT|LOG_DAEMON, "Failed to open pid file: %s", pidFile.fileName().toAscii().constData());
+            }
+            else
+               ::syslog(LOG_CRIT|LOG_DAEMON, "Failed to unlink pid file: %s", pidFile.fileName().toAscii().constData());
+         }
+         else
+            ::syslog(LOG_CRIT|LOG_DAEMON, "Failed to set SID: %m");
+      }
+      else
+         ::syslog(LOG_CRIT|LOG_DAEMON, "There's already a %s running", KEY);
+   }
+   else
+      ::syslog(LOG_CRIT|LOG_DAEMON, "Failed to read pid file %s", pidFile.fileName().toAscii().constData());
+
+   return(fRet);
 }

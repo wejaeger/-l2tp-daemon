@@ -1,8 +1,6 @@
 /*
  * $Id$
  *
- * $Id$
- *
  * File:   VpnControlDaemon.h
  * Author: Werner Jaeger
  *

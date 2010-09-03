@@ -19,6 +19,5 @@ UI_DIR = src/generated
 QMAKE_CC = gcc
 QMAKE_CXX = g++
 DEFINES += 
-INCLUDEPATH += ../qtservice-2.6_1/src 
+INCLUDEPATH += 
 LIBS += 
-include(../qtservice-2.6_1/src/qtservice.pri)
