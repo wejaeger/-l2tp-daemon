@@ -1,15 +1,12 @@
 /*
  * $Id$
  *
- * $Id$
- *
  * File:   VpnControlDaemon.cpp
  * Author: Werner Jaeger
  *
  * Created on August 26, 2010, 5:35 AM
  */
 #include <QLocalServer>
-#include <sys/stat.h>
 
 #include "VpnClientConnection.h"
 #include "VpnControlDaemon.h"
@@ -26,11 +23,9 @@ VpnControlDaemon::~VpnControlDaemon()
 bool VpnControlDaemon::start()
 {
    QLocalServer::removeServer(m_strKey);
-   const unsigned int iUmask = ::umask(0);
    const bool fStarted = m_pServer->listen(m_strKey);
    if (fStarted)
       connect(m_pServer, SIGNAL(newConnection()), SLOT(incomingLocalConnection()));
-   ::umask(iUmask);
 
    return(fStarted);
 }
