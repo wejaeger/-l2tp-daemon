@@ -9,11 +9,11 @@
 
 #include <QFile>
 #include <QByteArray>
+#include <QProcess>
 
 #include <fcntl.h>
 #include <signal.h>
-#include <sys/stat.h>
-#include <sys/syslog.h>
+#include <syslog.h>
 
 #include "VpnControlDaemon.h"
 #include "VpnControlDaemonApplication.h"
@@ -69,9 +69,12 @@ int VpnControlDaemonApplication::daemonize() const
                else
                   ::syslog(LOG_CRIT|LOG_DAEMON, "Failed to redirect stdin to %s", DEVNULL);
 
-               ::umask(0);
                if (m_pDaemon->start())
                {
+                  // Workaround: process needs to be started once otherwise no finished signal is emitted
+                  QProcess process;
+                  process.start("echo");
+
                   ::signal(SIGTERM, terminationSignalhandler);
                   ::signal(SIGINT, terminationSignalhandler);
                   ::syslog(LOG_INFO|LOG_DAEMON, "%s started", KEY);

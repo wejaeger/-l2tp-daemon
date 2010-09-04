@@ -11,11 +11,10 @@
 #define	VPNCLIENTCONNECTION_H
 
 #include <QObject>
-#include <QQueue>
+#include <QProcess>
 
 class QTextStream;
 class QLocalSocket;
-class QProcess;
 
 class VpnClientConnection : public QObject
 {
@@ -55,12 +54,18 @@ public:
       OK = 0,
       ERR_UNKNOWN_CMD = 90,
       ERR_INALID_NO_OF_ARGUMENTS = 91,
+      ERR_COMMAND_FAILED_TO_START = 92,
+      ERR_COMMAND_CRASHED_AFTER_START = 93,
+      ERR_COMMAND_TIMEDOUT = 94,
+      ERR_COMMAND_FAILED_TO_READ_FROM_PROCESS = 95,
+      ERR_COMMAND_FAILED_TO_WRITE_TO_PROCESS = 96,
+      ERR_COMMAND_FAILED_WITH_UNKNOW_ERROR = 97,
       ERR_WRITE_PIPE = 200,
       ERR_OPEN_PIPE = 210,
-      ERR_CREATE_VPN_LOG_PIPE = 210,
-      ERR_CHMOD_VPN_LOG_PIPE = 211,
-      ERR_CHOWN_VPN_LOG_PIPE = 212,
-      ERR_START_SYSLOG_DAEMON = 213,
+      ERR_CREATE_VPN_LOG_PIPE = 220,
+      ERR_CHMOD_VPN_LOG_PIPE = 221,
+      ERR_CHOWN_VPN_LOG_PIPE = 222,
+      ERR_START_SYSLOG_DAEMON = 223,
    };
 
    enum ResponseInformation
@@ -73,8 +78,8 @@ public:
 
 private slots:
    void readyRead();
-   void executeExternalCommand();
    void readyReadStandardOutput();
+   void onCommandError(QProcess::ProcessError iError);
    void onCommandFinished(int iExitCode);
 
 private:
@@ -87,11 +92,9 @@ private:
 
    QTextStream*     const m_pStream;
    QLocalSocket*    const m_pSocket;
-   QQueue<QString>* const m_pCommandQueue;
    QProcess*        const m_pProcess;
 
    QString m_strActiveCommand;
-   volatile bool m_fProcessIsActive;
 };
 
 #endif	/* VPNCLIENTCONNECTION_H */

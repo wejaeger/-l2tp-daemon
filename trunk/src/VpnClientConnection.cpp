@@ -9,12 +9,10 @@
 #include <QCoreApplication>
 #include <QLocalSocket>
 #include <QFile>
-#include <QStringList>
-#include <QTimer>
-#include <QProcess>
 
 #include <fcntl.h>
 #include <pwd.h>
+#include <syslog.h>
 
 #include "VpnClientConnection.h"
 
@@ -52,10 +50,12 @@ static COMMANDS[] =
 static const size_t NOOFCOMMANDS = sizeof(COMMANDS) / sizeof(COMMANDS[0]);
 
 VpnClientConnection::VpnClientConnection(QLocalSocket* pSocket, QObject* pParent) : QObject(pParent), m_pStream(new QTextStream),
-   m_pSocket(pSocket), m_pCommandQueue(new QQueue<QString>()), m_pProcess(new QProcess), m_strActiveCommand(QString::null), m_fProcessIsActive(false)
+   m_pSocket(pSocket), m_pProcess(new QProcess), m_strActiveCommand(QString::null)
 {
    if (m_pSocket)
    {
+      ::syslog(LOG_DEBUG|LOG_DAEMON, "%s", "Opening client connection");
+
       m_pSocket->setParent(this);
       connect(m_pSocket, SIGNAL(readyRead()), SLOT(readyRead()));
       connect(m_pSocket, SIGNAL(disconnected()), SLOT(deleteLater()));
@@ -63,6 +63,7 @@ VpnClientConnection::VpnClientConnection(QLocalSocket* pSocket, QObject* pParent
 
       m_pProcess->setProcessChannelMode(QProcess::MergedChannels);
       connect(m_pProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(readyReadStandardOutput()));
+      connect(m_pProcess, SIGNAL(error(QProcess::ProcessError)), this, SLOT(onCommandError(QProcess::ProcessError)));
       connect(m_pProcess, SIGNAL(finished(int)), this, SLOT(onCommandFinished(int)));
    }
    else
@@ -71,11 +72,13 @@ VpnClientConnection::VpnClientConnection(QLocalSocket* pSocket, QObject* pParent
 
 VpnClientConnection::~VpnClientConnection()
 {
+
+   ::syslog(LOG_DEBUG|LOG_DAEMON, "%s", "Closing client connection");
+
    if (m_pSocket && m_pSocket->state() == QLocalSocket::ConnectedState && send(INFORMATION, CLOSED))
       m_pSocket->close();
 
    delete m_pProcess;
-   delete m_pCommandQueue;
    delete m_pStream;
 }
 
@@ -104,8 +107,9 @@ void VpnClientConnection::readyRead()
                   switch (COMMANDS[iCommand].iType)
                   {
                      case PROCESS:
-                        m_pCommandQueue->append(strCommand);
-                        QTimer::singleShot(0, this, SLOT(executeExternalCommand()));
+                        m_strActiveCommand = strCommand;
+                        ::syslog(LOG_DEBUG|LOG_DAEMON, "Executing command %s", m_strActiveCommand.toAscii().constData());
+                        m_pProcess->start(m_strActiveCommand, QProcess::ReadOnly);
                         break;
 
                      case PIPE:
@@ -180,28 +184,6 @@ void VpnClientConnection::readyRead()
    }
 }
 
-void VpnClientConnection::executeExternalCommand()
-{
-   while (!m_pCommandQueue->empty())
-   {
-      if (!m_fProcessIsActive)
-      {
-         m_strActiveCommand = m_pCommandQueue->dequeue();
-
-         m_pProcess->start(m_strActiveCommand);
-
-         if (!m_pProcess->waitForStarted())
-         {
-            // returns error codes from 0 - 5
-            send(RESULT, static_cast<ResponseResult>(m_pProcess->error() + 100), m_strActiveCommand);
-         }
-         else
-            m_fProcessIsActive = true;
-      }
-      QCoreApplication::processEvents();
-   }
-}
-
 void VpnClientConnection::readyReadStandardOutput()
 {
    while (m_pProcess->canReadLine())
@@ -212,9 +194,17 @@ void VpnClientConnection::readyReadStandardOutput()
    }
 }
 
+void VpnClientConnection::onCommandError(QProcess::ProcessError iError)
+{
+   ::syslog(LOG_DEBUG|LOG_DAEMON, "Command %s finished with error code %d", m_strActiveCommand.toAscii().constData(), ERR_COMMAND_FAILED_TO_START + iError);
+
+   send(RESULT, static_cast<ResponseResult>(ERR_COMMAND_FAILED_TO_START + iError), m_strActiveCommand);
+}
+
 void VpnClientConnection::onCommandFinished(int iExitCode)
 {
-   m_fProcessIsActive = false;
+   ::syslog(LOG_DEBUG|LOG_DAEMON, "Command %s finished with exit code %d", m_strActiveCommand.toAscii().constData(), iExitCode);
+
    send(RESULT, static_cast<ResponseResult>(iExitCode), m_strActiveCommand);
 }
 
