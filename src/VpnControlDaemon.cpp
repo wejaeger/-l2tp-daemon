@@ -8,6 +8,8 @@
  */
 #include <QLocalServer>
 
+#include <sys/stat.h>
+
 #include "VpnClientConnection.h"
 #include "VpnControlDaemon.h"
 
@@ -23,13 +25,18 @@ VpnControlDaemon::~VpnControlDaemon()
 bool VpnControlDaemon::start()
 {
    QLocalServer::removeServer(m_strKey);
-   const bool fStarted = m_pServer->listen(m_strKey);
+
+   // makes sure, sockets are world read/writable
+   const int iUMask(::umask(0));
+
+   const bool fStarted(m_pServer->listen(m_strKey));
    if (fStarted)
       connect(m_pServer, SIGNAL(newConnection()), SLOT(incomingLocalConnection()));
 
+   ::umask(iUMask);
+
    return(fStarted);
 }
-
 
 void VpnControlDaemon::incomingLocalConnection()
 {
