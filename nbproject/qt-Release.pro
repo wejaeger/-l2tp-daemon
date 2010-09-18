@@ -3,7 +3,7 @@
 TEMPLATE = app
 DESTDIR = dist/Release/GNU-Linux-x86
 TARGET = L2tpIPsecVpnControlDaemon
-VERSION = 1.0.0
+VERSION = 0.9.1
 CONFIG -= debug_and_release app_bundle lib_bundle
 CONFIG += release 
 QT = core network
@@ -21,3 +21,5 @@ QMAKE_CXX = g++
 DEFINES += 
 INCLUDEPATH += 
 LIBS += -s  
+target.path = /usr/bin
+INSTALLS += target

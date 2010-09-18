@@ -1,0 +1,14 @@
+Source: l2tp-ipsec-vpn-daemon
+Section: admin
+Priority: optional
+Maintainer: Werner Jaeger <werner.jaeger@t-systems.com>
+Build-Depends: debhelper (>= 7.0.50), libqt4-dev (>= 4.6.2), qt4-qmake (>= 4.6.2)
+Standards-Version: 3.8.4
+Homepage: 
+
+Package: l2tp-ipsec-vpn-daemon
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Daemon for L2tpIPsecVpn GUI
+ Executes commands as root on behalf of the L2tpIPsecVpn
+ client application

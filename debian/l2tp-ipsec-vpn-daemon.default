@@ -1,0 +1,10 @@
+# Defaults for l2tp-ipsec-vpn-daemon initscript
+# sourced by /etc/init.d/l2tp-ipsec-vpn-daemon
+# installed at /etc/default/l2tp-ipsec-vpn-daemon by the maintainer scripts
+
+#
+# This is a POSIX shell fragment
+#
+
+# Additional options that are passed to the Daemon.
+DAEMON_OPTS=""
