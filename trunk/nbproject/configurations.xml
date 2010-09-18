@@ -45,6 +45,9 @@
         <platform>2</platform>
       </toolsSet>
       <qt>
+        <destdir>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}</destdir>
+        <target>L2tpIPsecVpnControlDaemon</target>
+        <version>0.9.1</version>
         <modules>core network</modules>
         <mocDir>src/generated</mocDir>
         <rccDir>src/generated</rccDir>
@@ -60,11 +63,18 @@
         <platform>2</platform>
       </toolsSet>
       <qt>
+        <destdir>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}</destdir>
+        <target>L2tpIPsecVpnControlDaemon</target>
+        <version>0.9.1</version>
         <buildMode>1</buildMode>
         <modules>core network</modules>
         <mocDir>src/generated</mocDir>
         <rccDir>src/generated</rccDir>
         <uiDir>src/generated</uiDir>
+        <defs>
+          <Elem>target.path = /usr/bin</Elem>
+          <Elem>INSTALLS += target</Elem>
+        </defs>
       </qt>
       <compileType>
         <cTool>
