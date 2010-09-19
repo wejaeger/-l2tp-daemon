@@ -28,6 +28,7 @@
 #include <fcntl.h>
 #include <pwd.h>
 #include <syslog.h>
+#include <sys/stat.h>
 
 #include "VpnClientConnection.h"
 
