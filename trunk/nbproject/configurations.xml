@@ -72,7 +72,7 @@
         <rccDir>src/generated</rccDir>
         <uiDir>src/generated</uiDir>
         <defs>
-          <Elem>target.path = /usr/bin</Elem>
+          <Elem>target.path = /usr/lib/l2tp-ipsec-vpn-daemon</Elem>
           <Elem>INSTALLS += target</Elem>
         </defs>
       </qt>
