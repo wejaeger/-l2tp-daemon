@@ -30,7 +30,7 @@
 NAME=L2tpIPsecVpnControlDaemon
 DESC=L2tpIPsecVpnControlDaemon
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-DAEMON=/usr/bin/$NAME
+DAEMON=/usr/lib/l2tp-ipsec-vpn-daemon/$NAME
 
 test -x $DAEMON || exit 0
 

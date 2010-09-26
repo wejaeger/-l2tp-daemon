@@ -21,5 +21,5 @@ QMAKE_CXX = g++
 DEFINES += 
 INCLUDEPATH += 
 LIBS += -s  
-target.path = /usr/bin
+target.path = /usr/lib/l2tp-ipsec-vpn-daemon
 INSTALLS += target
