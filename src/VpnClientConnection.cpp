@@ -54,6 +54,7 @@ static COMMANDS[] =
    {"/etc/init.d/xl2tpd stop", 0, PROCESS, NULL},
    {"start rsyslog", 0, PROCESS, NULL},
    {"stop rsyslog", 0, PROCESS, NULL},
+   {"ipsec auto --ready", 0, PROCESS, NULL},
    {"ipsec auto --up", 1, PROCESS, NULL},
    {"ipsec auto --down", 1, PROCESS, NULL},
    {"ipsec auto --rereadall", 0, PROCESS, NULL},
