@@ -65,7 +65,7 @@
       <qt>
         <destdir>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}</destdir>
         <target>L2tpIPsecVpnControlDaemon</target>
-        <version>0.9.2</version>
+        <version>0.9.3</version>
         <buildMode>1</buildMode>
         <modules>core network</modules>
         <mocDir>src/generated</mocDir>

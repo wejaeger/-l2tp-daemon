@@ -43,7 +43,6 @@ PIDFILE=/var/run/$NAME.pid
 
 # set the environment vaiables needed by the daemon
 export HOME=/root
-export DISPLAY=":0.0"
 
 set -e
 
