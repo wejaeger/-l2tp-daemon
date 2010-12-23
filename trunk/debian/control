@@ -12,7 +12,7 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Daemon for L2tpIPsecVpn GUI
  This daemon is exclusively used by the L2TP over IPsec Manager GUI
- application in order to execute openswan and xltp commands as root
+ application in order to execute openswan and xl2tp commands as root
  on behalf of the GUI client.
  .
  This daemon is only useful in combination with the GUI client 
