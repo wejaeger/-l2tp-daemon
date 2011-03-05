@@ -1,39 +1,24 @@
-This work was packaged for Debian by:
+Format: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=REVISION
+Upstream-Name: L2TP IPsec VPN Daemon
+Upstream-Contact: Werner Jaeger <werner_jaeger@web.de>
+Source: http://launchpad.net/l2tp-ipsec-vpn/trunk/0.9.8/+download/l2tp-ipsec-vpn-daemon_0.9.3.tar.gz
 
-    Werner Jaeger <werner.jaeger@t-systems.com> on Fri, 17 Sep 2010 15:05:58 +0200
+Files: *
+Copyright: Copyright 2011 Werner Jaeger <werner_jaeger@web.de>
+License: GPL-3+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 3 of the License, or
+ (at your option) any later version.
 
-Upstream Author(s):
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-    Werner Jaeger <werner.jaeger@t-systems.com>
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-Copyright:
-
-    Copyright (C) 2010 Werner Jaeger
-
-License:
-
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License, or
-    (at your option) any later version.
- 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
- 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
-
-    On Debian GNU/Linux systems, the complete text of the GNU General
-    Public License can be found in the `/usr/share/common-licenses/GPL-3' file.
-    
-
-The Debian packaging is:
-
-    Copyright (C) 2010 Werner Jaeger <werner.jaeger@t-systems.com>
-
-    and is licensed under the GPL version 3, 
-    see `/usr/share/common-licenses/GPL-3'.
-
+ On Debian GNU/Linux systems, the complete text of the GNU General
+ Public License can be found in the `/usr/share/common-licenses/GPL-3' file.
