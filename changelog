@@ -1,3 +1,6 @@
+0.9.4
+ - debian/changelog and debian/control updated for ppa - natty
+
 0.9.3
  - Added new command 'ipsec auto --ready'
 
