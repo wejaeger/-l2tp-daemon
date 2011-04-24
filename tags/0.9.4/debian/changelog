@@ -1,0 +1,18 @@
+l2tp-ipsec-vpn-daemon (0.9.4-0ubuntu1~ppa1~natty1) natty; urgency=low
+
+  * debian/changelog and debian/control updated for ppa - natty
+
+ -- Werner Jaeger <werner_jaeger@web.de>  Thu, 21 Apr 2011 13:44:37 +0200
+
+l2tp-ipsec-vpn-daemon (0.9.3-0ubuntu1~ppa1~maverick1) maverick; urgency=low
+
+  * New upstream release
+    - Added new command 'ipsec auto --ready'
+
+ -- Werner Jaeger <werner_jaeger@web.de>  Mon, 29 Nov 2010 06:35:17 +0100
+
+l2tp-ipsec-vpn-daemon (0.9.2-0ubuntu1~ppa1~maverick1) maverick; urgency=low
+
+  * Initial release (LP: #643427)
+
+ -- Werner Jaeger <werner_jaeger@web.de>  Mon, 20 Sep 2010 14:32:29 +0200
