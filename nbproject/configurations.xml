@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="69">
-  <logicalFolder name="root" displayName="root" projectFiles="true">
+<configurationDescriptor version="79">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
-                   projectFiles="true"
-                   kind="SOURCE_LOGICAL_FOLDER">
+                   projectFiles="true">
       <itemPath>src/VpnClientConnection.h</itemPath>
       <itemPath>src/VpnClientConnectionInternal.h</itemPath>
       <itemPath>src/VpnControlDaemon.h</itemPath>
@@ -12,13 +11,11 @@
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
-                   projectFiles="true"
-                   kind="SOURCE_LOGICAL_FOLDER">
+                   projectFiles="true">
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
-                   projectFiles="true"
-                   kind="SOURCE_LOGICAL_FOLDER">
+                   projectFiles="true">
       <itemPath>src/VpnClientConnection.cpp</itemPath>
       <itemPath>src/VpnControlDaemon.cpp</itemPath>
       <itemPath>src/VpnControlDaemonApplication.cpp</itemPath>
@@ -40,9 +37,8 @@
   <confs>
     <conf name="Debug" type="4">
       <toolsSet>
-        <developmentServer>localhost</developmentServer>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>GNU|GNU</compilerSet>
-        <platform>2</platform>
       </toolsSet>
       <qt>
         <destdir>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}</destdir>
@@ -58,9 +54,8 @@
     </conf>
     <conf name="Release" type="4">
       <toolsSet>
-        <developmentServer>localhost</developmentServer>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>GNU|GNU</compilerSet>
-        <platform>2</platform>
       </toolsSet>
       <qt>
         <destdir>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}</destdir>
