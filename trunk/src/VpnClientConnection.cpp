@@ -46,14 +46,14 @@ struct
 }
 static COMMANDS[] =
 {
-   {"/etc/init.d/pcscd start", 0, PROCESS, NULL},
-   {"/etc/init.d/pcscd stop", 0, PROCESS, NULL},
+   {"invoke-rc.d pcscd start", 0, PROCESS, NULL},
+   {"invoke-rc.d pcscd stop", 0, PROCESS, NULL},
    {"ipsec setup start", 0, PROCESS, NULL},
    {"ipsec setup stop", 0, PROCESS, NULL},
-   {"/etc/init.d/xl2tpd start", 0, PROCESS, NULL},
-   {"/etc/init.d/xl2tpd stop", 0, PROCESS, NULL},
-   {"start rsyslog", 0, PROCESS, NULL},
-   {"stop rsyslog", 0, PROCESS, NULL},
+   {"invoke-rc.d xl2tpd start", 0, PROCESS, NULL},
+   {"invoke-rc.d xl2tpd stop", 0, PROCESS, NULL},
+   {"invoke-rc.d rsyslog start", 0, PROCESS, NULL},
+   {"invoke-rc.d rsyslog stop", 0, PROCESS, NULL},
    {"ipsec auto --ready", 0, PROCESS, NULL},
    {"ipsec auto --up", 1, PROCESS, NULL},
    {"ipsec auto --down", 1, PROCESS, NULL},

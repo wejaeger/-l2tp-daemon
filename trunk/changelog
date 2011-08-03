@@ -1,3 +1,6 @@
+0.9.5
+ - use invoke-rc.d instead of directly using /etc/init.d to start services
+
 0.9.4
  - debian/changelog and debian/control updated for ppa - natty
 
