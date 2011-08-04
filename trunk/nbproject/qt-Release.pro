@@ -1,7 +1,7 @@
 # This file is generated automatically. Do not edit.
 # Use project properties -> Build -> Qt -> Expert -> Custom Definitions.
 TEMPLATE = app
-DESTDIR = dist/Release/GNU-Linux-x86
+DESTDIR = dist/Release
 TARGET = L2tpIPsecVpnControlDaemon
 VERSION = 0.9.5
 CONFIG -= debug_and_release app_bundle lib_bundle
@@ -20,6 +20,6 @@ QMAKE_CC = gcc
 QMAKE_CXX = g++
 DEFINES += 
 INCLUDEPATH += 
-LIBS += -s  
+LIBS += 
 target.path = /usr/lib/l2tp-ipsec-vpn-daemon
 INSTALLS += target

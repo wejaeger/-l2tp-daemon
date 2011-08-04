@@ -1,7 +1,7 @@
 # This file is generated automatically. Do not edit.
 # Use project properties -> Build -> Qt -> Expert -> Custom Definitions.
 TEMPLATE = app
-DESTDIR = dist/Debug/GNU-Linux-x86
+DESTDIR = dist/Debug
 TARGET = L2tpIPsecVpnControlDaemon
 VERSION = 0.9.5
 CONFIG -= debug_and_release app_bundle lib_bundle
