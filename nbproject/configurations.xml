@@ -41,9 +41,9 @@
         <compilerSet>GNU|GNU</compilerSet>
       </toolsSet>
       <qt>
-        <destdir>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}</destdir>
+        <destdir>${CND_DISTDIR}/${CND_CONF}</destdir>
         <target>L2tpIPsecVpnControlDaemon</target>
-        <version>0.9.2</version>
+        <version>0.9.5</version>
         <modules>core network</modules>
         <mocDir>src/generated</mocDir>
         <rccDir>src/generated</rccDir>
@@ -51,6 +51,18 @@
       </qt>
       <compileType>
       </compileType>
+      <packaging>
+        <packType>Tar</packType>
+        <output>${CND_DISTDIR}/${CND_CONF}/package/l2tp-ipsec-vpn-daemon-0.9.5.tar</output>
+        <packFileList>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+        </packFileList>
+      </packaging>
     </conf>
     <conf name="Release" type="4">
       <toolsSet>
@@ -58,7 +70,7 @@
         <compilerSet>GNU|GNU</compilerSet>
       </toolsSet>
       <qt>
-        <destdir>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}</destdir>
+        <destdir>${CND_DISTDIR}/${CND_CONF}</destdir>
         <target>L2tpIPsecVpnControlDaemon</target>
         <version>0.9.5</version>
         <buildMode>1</buildMode>
@@ -84,12 +96,19 @@
         <asmTool>
           <developmentMode>5</developmentMode>
         </asmTool>
-        <linkerTool>
-          <linkerLibItems>
-            <linkerOptionItem>-s</linkerOptionItem>
-          </linkerLibItems>
-        </linkerTool>
       </compileType>
+      <packaging>
+        <packType>Tar</packType>
+        <output>${CND_DISTDIR}/${CND_CONF}/package/l2tp-ipsec-vpn-daemon-0.9.5.tar</output>
+        <packFileList>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+        </packFileList>
+      </packaging>
     </conf>
   </confs>
 </configurationDescriptor>
