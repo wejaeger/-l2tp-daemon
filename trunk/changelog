@@ -1,3 +1,7 @@
+0.9.6
+ - Makefile:
+   * added clobber and uninstall target
+
 0.9.5
  - use invoke-rc.d instead of directly using /etc/init.d to start services
 
