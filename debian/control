@@ -12,7 +12,7 @@ Package: l2tp-ipsec-vpn-daemon
 Architecture: any
 Depends: openswan (>= 2.6.23),
          xl2tpd (>= 1.2.5),
-         ${misc:Depends}, 
+         ${misc:Depends},
          ${shlibs:Depends}
 Description: daemon for L2tpIPsecVpn GUI
  This daemon is exclusively used by the L2TP over IPsec Manager GUI

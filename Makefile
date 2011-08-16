@@ -23,49 +23,78 @@
 #
 
 # default configuration is release
-CONF ?= Release
+DEFAULTCONF=Release
 
-# build directory
+# Active Configuration
+CONF ?= ${DEFAULTCONF}
+
+# All Configurations
+ALLCONFS=Debug Release 
+
+# various directories
 BUILDDIR = build/${CONF}
+GENDIR = src/generated
+DISTDIR = dist/${CONF}
 
 # build
 build: nbproject/qt-${CONF}.mk
-	make -f nbproject/qt-${CONF}.mk dist/${CONF}/L2tpIPsecVpnControlDaemon
+	make -f nbproject/qt-${CONF}.mk ${DISTDIR}/L2tpIPsecVpnControlDaemon
 
 # install
 install: nbproject/qt-${CONF}.mk
 	make -f nbproject/qt-${CONF}.mk install
 
+# uninstall
+uninstall: nbproject/qt-${CONF}.mk
+	make -f nbproject/qt-${CONF}.mk uninstall
+
 # clean
-clean: nbproject/qt-${CONF}.mk
-	make -f nbproject/qt-${CONF}.mk distclean
-	rm -f nbproject/qt-${CONF}.mk
+clean:
+	rm -rf ${BUILDDIR}/*
+	rm -rf ${GENDIR}/*
+	rm -rf ${DISTDIR}/*
+	rm -f nbproject/*.mk
+	rm -f nbproject/*.bash
+	rm -f *.mk
+
+# clobber 
+clobber:
+	@for CONF in ${ALLCONFS}; \
+	do \
+	    make CONF=$${CONF} clean; \
+	done
 
 # help
 help:
 	@echo "This makefile supports the following configurations:"
-	@echo "    Release, Debug"
+	@echo "    ${ALLCONFS} (default = ${DEFAULTCONF})"
 	@echo ""
 	@echo "and the following targets:"
 	@echo "    build  (default target)"
 	@echo "    clean"
+	@echo "    clobber"
 	@echo "    install"
+	@echo "    uninstall"
 	@echo "    help"
 	@echo ""
 	@echo "Makefile Usage:"
 	@echo "    make [CONF=<CONFIGURATION>] build"
 	@echo "    make [CONF=<CONFIGURATION>] clean"
-	@echo "    make [CONF=<CONFIGURATION>] [INSTALL_ROOT=<Base directory to intall in>] install"
+	@echo "    make clobber"
+	@echo "    make [CONF=<CONFIGURATION>] [INSTALL_ROOT=<Base directory to install in>] install"
+	@echo "    make [INSTALL_ROOT=<Base directory to uninstall from>] uninstall"
 	@echo "    make help"
 	@echo ""
 	@echo "Target 'build' will build a specific configuration."
-	@echo "Target 'clean' will clean a specific configuration."
-	@echo "Target 'install' will install a specific configuration of the program."
-	@echo "    in [INSTALL_ROOT]/usr/lib/l2tp-ipsec-vpn-daemon/"
-	@echo "Target 'help' prints this message."
+	@echo "Target 'clean' will remove all built files from a specific configuration."
+	@echo "Target 'clobber' will remove all built files from all configurations"
+	@echo "Target 'install' will install a specific configuration of the program"
+	@echo "       in [INSTALL_ROOT]/usr/lib/l2tp-ipsec-vpn-daemon/"
+	@echo "Target 'uninstall' will uninstall the program from [INSTALL_ROOT]/usr/lib/l2tp-ipsec-vpn-daemon/"
+	@echo "Target 'help' prints this message"
 	@echo ""
 
 nbproject/qt-${CONF}.mk: nbproject/qt-${CONF}.pro
-	qmake-qt4 -o qttmp-${CONF}.mk -after "OBJECTS_DIR=${BUILDDIR}" nbproject/qt-${CONF}.pro
+	qmake-qt4 -o qttmp-${CONF}.mk -after "OBJECTS_DIR=${BUILDDIR}" "DESTDIR=${DISTDIR}" nbproject/qt-${CONF}.pro
 	mv -f qttmp-${CONF}.mk nbproject/qt-${CONF}.mk
 

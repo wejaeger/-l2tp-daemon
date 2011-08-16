@@ -43,17 +43,21 @@
       <qt>
         <destdir>${CND_DISTDIR}/${CND_CONF}</destdir>
         <target>L2tpIPsecVpnControlDaemon</target>
-        <version>0.9.5</version>
+        <version>0.9.6</version>
         <modules>core network</modules>
         <mocDir>src/generated</mocDir>
         <rccDir>src/generated</rccDir>
         <uiDir>src/generated</uiDir>
+        <defs>
+          <Elem>target.path = /usr/lib/l2tp-ipsec-vpn-daemon</Elem>
+          <Elem>INSTALLS += target</Elem>
+        </defs>
       </qt>
       <compileType>
       </compileType>
       <packaging>
         <packType>Tar</packType>
-        <output>${CND_DISTDIR}/${CND_CONF}/package/l2tp-ipsec-vpn-daemon-0.9.5.tar</output>
+        <output>${CND_DISTDIR}/${CND_CONF}/package/l2tp-ipsec-vpn-daemon-0.9.6.tar</output>
         <packFileList>
           <packFileListElem type="File"
                             to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}"
@@ -72,7 +76,7 @@
       <qt>
         <destdir>${CND_DISTDIR}/${CND_CONF}</destdir>
         <target>L2tpIPsecVpnControlDaemon</target>
-        <version>0.9.5</version>
+        <version>0.9.6</version>
         <buildMode>1</buildMode>
         <modules>core network</modules>
         <mocDir>src/generated</mocDir>
@@ -99,7 +103,7 @@
       </compileType>
       <packaging>
         <packType>Tar</packType>
-        <output>${CND_DISTDIR}/${CND_CONF}/package/l2tp-ipsec-vpn-daemon-0.9.5.tar</output>
+        <output>${CND_DISTDIR}/${CND_CONF}/package/l2tp-ipsec-vpn-daemon-0.9.6.tar</output>
         <packFileList>
           <packFileListElem type="File"
                             to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}"
