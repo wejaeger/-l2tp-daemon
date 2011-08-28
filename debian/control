@@ -9,7 +9,7 @@ Standards-Version: 3.9.2
 Homepage: https://launchpad.net/l2tp-ipsec-vpn
 
 Package: l2tp-ipsec-vpn-daemon
-Architecture: any
+Architecture: linux-any
 Depends: openswan (>= 2.6.23),
          xl2tpd (>= 1.2.5),
          ${misc:Depends},
