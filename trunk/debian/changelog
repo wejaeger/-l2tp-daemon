@@ -4,7 +4,11 @@ l2tp-ipsec-vpn-daemon (0.9.6-0ubuntu1~ppa1~natty1) natty; urgency=low
     - Makefile:
       o added clobber and uninstall target
 
- -- Werner Jaeger <werner_jaeger@web.de>  Aug, 15 Aug 2011 07:53:49 +0200
+  * debian/control: 
+    - Removed ppp-2.4.5-eaptls-mppe suggests dependency
+    - Changed architecture from any to linux-any (Closes: #639434)
+
+ -- Werner Jaeger <werner_jaeger@web.de>  Aug, 28 Aug 2011 12:35:41 +0200
 
 l2tp-ipsec-vpn-daemon (0.9.5-0ubuntu1~ppa1~natty1) natty; urgency=low
 
