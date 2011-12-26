@@ -4,7 +4,7 @@ l2tp-ipsec-vpn-daemon (0.9.6-0ubuntu2~ppa1~natty1) natty; urgency=low
     - empty lines must be escaped by representing them by a space followed by a 
       dot
 
- -- Werner Jaeger <werner_jaeger@web.de>  Fri, 23 Seb 2011 08:15:29 +0200
+ -- Werner Jaeger <werner_jaeger@web.de>  Fri, 23 Sep 2011 08:15:29 +0200
 
 l2tp-ipsec-vpn-daemon (0.9.6-0ubuntu1~ppa1~natty1) natty; urgency=low
 
