@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="79">
+<configurationDescriptor version="80">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -43,7 +43,7 @@
       <qt>
         <destdir>${CND_DISTDIR}/${CND_CONF}</destdir>
         <target>L2tpIPsecVpnControlDaemon</target>
-        <version>0.9.6</version>
+        <version>0.9.8</version>
         <modules>core network</modules>
         <mocDir>src/generated</mocDir>
         <rccDir>src/generated</rccDir>
@@ -57,7 +57,7 @@
       </compileType>
       <packaging>
         <packType>Tar</packType>
-        <output>${CND_DISTDIR}/${CND_CONF}/package/l2tp-ipsec-vpn-daemon-0.9.6.tar</output>
+        <output>${CND_DISTDIR}/${CND_CONF}/package/l2tp-ipsec-vpn-daemon-0.9.8.tar</output>
         <packFileList>
           <packFileListElem type="File"
                             to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}"
@@ -76,7 +76,7 @@
       <qt>
         <destdir>${CND_DISTDIR}/${CND_CONF}</destdir>
         <target>L2tpIPsecVpnControlDaemon</target>
-        <version>0.9.6</version>
+        <version>0.9.8</version>
         <buildMode>1</buildMode>
         <modules>core network</modules>
         <mocDir>src/generated</mocDir>
@@ -103,7 +103,7 @@
       </compileType>
       <packaging>
         <packType>Tar</packType>
-        <output>${CND_DISTDIR}/${CND_CONF}/package/l2tp-ipsec-vpn-daemon-0.9.6.tar</output>
+        <output>${CND_DISTDIR}/${CND_CONF}/package/l2tp-ipsec-vpn-daemon-0.9.8.tar</output>
         <packFileList>
           <packFileListElem type="File"
                             to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}"

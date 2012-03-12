@@ -1,3 +1,10 @@
+0.9.8
+ - new commands CMD_WRITE_CONNECTIONNAME_INFO and 
+   CMD_WRITE_DEFAULT_GATEWAY_INFO
+
+0.9.7
+ - adapted to precise distribution
+
 0.9.6
  - Makefile:
    * added clobber and uninstall target
