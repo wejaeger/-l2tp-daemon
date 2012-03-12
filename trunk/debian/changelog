@@ -1,3 +1,17 @@
+l2tp-ipsec-vpn-daemon (0.9.8-1) unstable; urgency=low
+
+  * New upstream release
+    - new commands CMD_WRITE_CONNECTIONNAME_INFO and 
+      CMD_WRITE_DEFAULT_GATEWAY_INFO
+
+ -- Werner Jaeger <werner_jaeger@web.de>  Mon, 12 Mar 2012 14:42:11 +0100
+
+l2tp-ipsec-vpn-daemon (0.9.7-0ubuntu1~ppa1~precise1) precise; urgency=low
+
+  * adapted to precise distribution
+
+ -- Werner Jaeger <werner_jaeger@web.de>  Thu, 2 Mar 2012 08:50:19 +0200
+
 l2tp-ipsec-vpn-daemon (0.9.6-0ubuntu2~ppa1~natty1) natty; urgency=low
 
   * debian/copyright:

@@ -36,6 +36,8 @@ enum CommandType { PROCESS, PIPE, INTERNAL };
 
 static const char* const SYSLOGUSERNAME = "syslog";
 static const QFile XL2TPCONTROLPIPE("/var/run/xl2tpd/l2tp-control");
+static const QFile CONNECTIONNAMEINFO("/var/run/L2tpIPsecVpnControlDaemon/connectionName.info");
+static const QFile DEFAULTGATEWAYINFO("/var/run/L2tpIPsecVpnControlDaemon/defaultgateway.info");
 
 struct
 {
@@ -61,6 +63,8 @@ static COMMANDS[] =
    {"c", 1, PIPE, const_cast<QFile*>(&XL2TPCONTROLPIPE)},
    {"d", 1, PIPE, const_cast<QFile*>(&XL2TPCONTROLPIPE)},
    {"createVpnLogPipe", 1, INTERNAL, NULL},
+   {"writeConnectionNameImfo", 1, INTERNAL, const_cast<QFile*>(&CONNECTIONNAMEINFO)},
+   {"writeDefaultGatewayImfo", 1, INTERNAL, const_cast<QFile*>(&DEFAULTGATEWAYINFO)},
    {"quit", 0, INTERNAL, NULL},
 };
 
@@ -106,7 +110,7 @@ void VpnClientConnection::readyRead()
       QString strResponseLine;
       while ((strResponseLine = m_pStream->readLine()).length() > 0)
       {
-         const QStringList strCommandParts(strResponseLine.split(' ', QString::SkipEmptyParts));
+         QStringList strCommandParts(strResponseLine.split(' ', QString::SkipEmptyParts));
          const int iParts(strCommandParts.count());
 
          if (iParts > 0)
@@ -175,6 +179,37 @@ void VpnClientConnection::readyRead()
                                  result = ERR_START_SYSLOG_DAEMON;
 
                               send(RESULT, result, strCommand);
+                           }
+                           break;
+
+                           case CMD_WRITE_CONNECTIONNAME_INFO:
+                           case CMD_WRITE_DEFAULT_GATEWAY_INFO:
+                           {
+                              if (COMMANDS[iCommand].pPipe->open(QIODevice::WriteOnly | QIODevice::Truncate))
+                              {
+                                 bool fOk(true);
+                                 for (int i = 1; fOk && i < iParts; i++)
+                                 {
+                                    const QString str(strCommandParts[i].replace('\3', '\n'));
+                                    if (COMMANDS[iCommand].pPipe->write(str.toAscii().constData()) != str.length())
+                                       fOk = false;
+
+                                    if (fOk && i < iParts -1)
+                                    {
+                                       if (COMMANDS[iCommand].pPipe->write(" ") != 1)
+                                          fOk = false;
+                                    }
+                                 }
+
+                                 if (fOk)
+                                    send(RESULT, OK, strCommand);
+                                 else
+                                    send(RESULT, ERR_WRITE_PIPE, strCommand);
+
+                                 COMMANDS[iCommand].pPipe->close();
+                              }
+                              else
+                                 send(RESULT, ERR_OPEN_PIPE, strCommand);
                            }
                            break;
 

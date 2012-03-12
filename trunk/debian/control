@@ -3,7 +3,7 @@ Section: net
 Priority: optional
 Maintainer: Werner Jaeger <werner_jaeger@web.de>
 Build-Depends: debhelper (>= 8.0), libqt4-dev (>= 4.6.2), qt4-qmake (>= 4.6.2)
-Standards-Version: 3.9.2
+Standards-Version: 3.9.3
 Homepage: https://launchpad.net/l2tp-ipsec-vpn
 
 Package: l2tp-ipsec-vpn-daemon

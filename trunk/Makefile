@@ -43,9 +43,12 @@ build: nbproject/qt-${CONF}.mk
 # install
 install: nbproject/qt-${CONF}.mk
 	make -f nbproject/qt-${CONF}.mk install
+	invoke-rc.d l2tp-ipsec-vpn-daemon start
 
 # uninstall
 uninstall: nbproject/qt-${CONF}.mk
+	invoke-rc.d l2tp-ipsec-vpn-daemon stop
+	rm -rf /var/run/L2tpIPsecVpnControlDaemon
 	make -f nbproject/qt-${CONF}.mk uninstall
 
 # clean
