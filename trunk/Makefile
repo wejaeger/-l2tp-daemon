@@ -43,12 +43,25 @@ build: nbproject/qt-${CONF}.mk
 # install
 install: nbproject/qt-${CONF}.mk
 	make -f nbproject/qt-${CONF}.mk install
-	invoke-rc.d l2tp-ipsec-vpn-daemon start
+	@if [  "$${INSTALL_ROOT}" = "" -a ! -x "/etc/init.d/l2tp-ipsec-vpn-daemon" ]; then \
+		cp debian/l2tp-ipsec-vpn-daemon.init /etc/init.d/l2tp-ipsec-vpn-daemon; \
+		cp debian/l2tp-ipsec-vpn-daemon.default /etc/default/l2tp-ipsec-vpn-daemon; \
+		chmod +x /etc/init.d/l2tp-ipsec-vpn-daemon; \
+   fi
+	@if [ "$${INSTALL_ROOT}" = "" ]; then \
+      update-rc.d l2tp-ipsec-vpn-daemon defaults >/dev/null; \
+	   invoke-rc.d l2tp-ipsec-vpn-daemon start; \
+ 	fi
 
 # uninstall
 uninstall: nbproject/qt-${CONF}.mk
-	invoke-rc.d l2tp-ipsec-vpn-daemon stop
-	rm -rf /var/run/L2tpIPsecVpnControlDaemon
+	@if [ -x "/etc/init.d/l2tp-ipsec-vpn-daemon" ]; then \
+		invoke-rc.d l2tp-ipsec-vpn-daemon stop; \
+		update-rc.d -f l2tp-ipsec-vpn-daemon remove >/dev/null; \
+		rm -f /etc/init.d/l2tp-ipsec-vpn-daemon; \
+		rm -f /etc/default/l2tp-ipsec-vpn-daemon; \
+	fi
+	rm -rf $(INSTALL_ROOT)/var/run/L2tpIPsecVpnControlDaemon
 	make -f nbproject/qt-${CONF}.mk uninstall
 
 # clean

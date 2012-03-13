@@ -46,6 +46,8 @@ export HOME=/root
 
 set -e
 
+. /lib/lsb/init-functions
+
 case "$1" in
   start)
 	echo -n "Starting $DESC: "
@@ -71,9 +73,12 @@ case "$1" in
 	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON -- $DAEMON_OPTS
 	echo "$NAME."
 	;;
+  status)
+   status_of_proc -p $PIDFILE $DAEMON $NAME || true
+   ;;
   *)
 	N=/etc/init.d/$NAME
-	echo "Usage: $N {start|stop|restart|force-reload}" >&2
+	echo "Usage: $N {start|stop|restart|status|force-reload}" >&2
 	exit 1
 	;;
 esac
