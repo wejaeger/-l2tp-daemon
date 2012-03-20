@@ -43,7 +43,7 @@ fi
 
 # Edit /etc/default/l2tp-ipsec-vpn-daemon and set RUN_CONTROL_DAEMON=no to 
 # prevent it from being started at boot time.
-if [ "$RUN_CONTROL_DAEMON" == no ]; then
+if [ "$RUN_CONTROL_DAEMON" = no ]; then
 	exit 0
 fi
 
