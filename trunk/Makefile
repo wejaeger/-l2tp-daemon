@@ -43,11 +43,10 @@ build: nbproject/qt-${CONF}.mk
 # install
 install: nbproject/qt-${CONF}.mk
 	make -f nbproject/qt-${CONF}.mk install
-	@if [  "$${INSTALL_ROOT}" = "" -a ! -x "/etc/init.d/l2tp-ipsec-vpn-daemon" ]; then \
-		cp debian/l2tp-ipsec-vpn-daemon.init /etc/init.d/l2tp-ipsec-vpn-daemon; \
-		cp debian/l2tp-ipsec-vpn-daemon.default /etc/default/l2tp-ipsec-vpn-daemon; \
-		chmod +x /etc/init.d/l2tp-ipsec-vpn-daemon; \
-   fi
+	cp etc/l2tp-ipsec-vpn-daemon.init $(INSTALL_ROOT)/etc/init.d/l2tp-ipsec-vpn-daemon;
+	cp etc/l2tp-ipsec-vpn-daemon.default $(INSTALL_ROOT)/etc/default/l2tp-ipsec-vpn-daemon;
+	chmod +x $(INSTALL_ROOT)/etc/init.d/l2tp-ipsec-vpn-daemon;
+
 	@if [ "$${INSTALL_ROOT}" = "" ]; then \
       update-rc.d l2tp-ipsec-vpn-daemon defaults >/dev/null; \
 	   invoke-rc.d l2tp-ipsec-vpn-daemon start; \

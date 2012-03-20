@@ -9,3 +9,6 @@ export INSTALL_ROOT=$(CURDIR)/debian/l2tp-ipsec-vpn-daemon
 override_dh_installchangelogs:
 	dh_installchangelogs changelog
 
+override_dh_installinit:
+	dh_installinit --onlyscripts
+
