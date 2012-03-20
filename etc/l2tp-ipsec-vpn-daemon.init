@@ -1,6 +1,8 @@
 #!/bin/sh
 #
-# Copyright (c) 2010 Werner Jaeger <werner.jaeger@t-systems.com>
+# $Id$
+#
+# Copyright (c) 2010 Werner Jaeger <werner_jaeger@web.de>
 #
 # This is free software; you may redistribute it and/or modify
 # it under the terms of the GNU General Public License as
@@ -39,9 +41,15 @@ if [ -f /etc/default/l2tp-ipsec-vpn-daemon ] ; then
 	. /etc/default/l2tp-ipsec-vpn-daemon
 fi
 
+# Edit /etc/default/l2tp-ipsec-vpn-daemon and set RUN_CONTROL_DAEMON=no to 
+# prevent it from being started at boot time.
+if [ "$RUN_CONTROL_DAEMON" == no ]; then
+	exit 0
+fi
+
 PIDFILE=/var/run/$NAME.pid
 
-# set the environment vaiables needed by the daemon
+# set the environment variables needed by the daemon
 export HOME=/root
 
 set -e
