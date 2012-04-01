@@ -81,6 +81,9 @@ clobber:
 	    make CONF=$${CONF} clean; \
 	done
 
+check:
+	cppcheck -I src -I ${GENDIR} --enable=all src
+
 # help
 help:
 	@echo "This makefile supports the following configurations:"
@@ -90,6 +93,7 @@ help:
 	@echo "    build  (default target)"
 	@echo "    clean"
 	@echo "    clobber"
+	@echo "    check"
 	@echo "    install"
 	@echo "    uninstall"
 	@echo "    help"
@@ -105,6 +109,7 @@ help:
 	@echo "Target 'build' will build a specific configuration."
 	@echo "Target 'clean' will remove all built files from a specific configuration."
 	@echo "Target 'clobber' will remove all built files from all configurations"
+	@echo "Target 'check' performs a static source code check using cppcheck"
 	@echo "Target 'install' will install a specific configuration of the program"
 	@echo "       in [INSTALL_ROOT]/usr/lib/l2tp-ipsec-vpn-daemon/"
 	@echo "Target 'uninstall' will uninstall the program from [INSTALL_ROOT]/usr/lib/l2tp-ipsec-vpn-daemon/"
