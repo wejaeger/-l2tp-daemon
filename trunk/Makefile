@@ -31,7 +31,7 @@ DEFAULTCONF=Release
 CONF ?= ${DEFAULTCONF}
 
 # All Configurations
-ALLCONFS=Debug Release 
+ALLCONFS=Debug Release
 
 # various directories
 BUILDDIR = build/${CONF}
@@ -53,13 +53,13 @@ install: nbproject/qt-${CONF}.mk
 
 	@if [ "$${INSTALL_ROOT}" = "" ]; then \
       update-rc.d l2tp-ipsec-vpn-daemon defaults >/dev/null; \
-	   invoke-rc.d l2tp-ipsec-vpn-daemon start; \
+	   service l2tp-ipsec-vpn-daemon start; \
  	fi
 
 # uninstall
 uninstall: nbproject/qt-${CONF}.mk
 	@if [ -x "/etc/init.d/l2tp-ipsec-vpn-daemon" ]; then \
-		invoke-rc.d l2tp-ipsec-vpn-daemon stop; \
+		service l2tp-ipsec-vpn-daemon stop; \
 		update-rc.d -f l2tp-ipsec-vpn-daemon remove >/dev/null; \
 		rm -f /etc/init.d/l2tp-ipsec-vpn-daemon; \
 		rm -f /etc/default/l2tp-ipsec-vpn-daemon; \
@@ -76,7 +76,7 @@ clean:
 	rm -f nbproject/*.bash
 	rm -f *.mk
 
-# clobber 
+# clobber
 clobber:
 	@for CONF in ${ALLCONFS}; \
 	do \
