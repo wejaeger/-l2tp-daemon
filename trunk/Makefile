@@ -22,8 +22,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-QMAKE := $(shell if [ -f /usr/bin/qmake ]; then echo "qmake"; else echo "qmake-qt4"; fi)
-
 # default configuration is release
 DEFAULTCONF=Release
 
@@ -38,6 +36,23 @@ BUILDDIR = build/${CONF}
 GENDIR = src/generated
 DISTDIR = dist/${CONF}
 
+# Distribution specific configurations
+QMAKE      := $(shell if [ -f /usr/bin/qmake ]; then echo "qmake"; else echo "qmake-qt4"; fi)
+CHKCONFIG  := $(wildcard /sbin/chkconfig)
+UPDATE_RCD := $(wildcard /usr/sbin/update-rc.d)
+
+ifneq (,$(CHKCONFIG))
+   ADD_INITD := $(CHKCONFIG) --add l2tp-ipsec-vpn-daemon
+   REMOVE_INITD := $(CHKCONFIG) --del l2tp-ipsec-vpn-daemon
+else
+	ifndef (,$(UPDATE_RCD))
+      ADD_INITD := $(UPDATE_RCD) l2tp-ipsec-vpn-daemon defaults
+      REMOVE_INITD := $(UPDATE_RCD) -f l2tp-ipsec-vpn-daemon remove
+   endif
+endif
+
+INITRD_DIR := $(firstword $(wildcard /etc/rc.d/init.d /etc/init.d))
+
 # build
 build: nbproject/qt-${CONF}.mk
 	make -f nbproject/qt-${CONF}.mk ${DISTDIR}/L2tpIPsecVpnControlDaemon
@@ -45,23 +60,25 @@ build: nbproject/qt-${CONF}.mk
 # install
 install: nbproject/qt-${CONF}.mk
 	make -f nbproject/qt-${CONF}.mk install
-	mkdir -p $(INSTALL_ROOT)/etc/init.d
+	mkdir -p $(INSTALL_ROOT)$(INITRD_DIR)
 	mkdir -p $(INSTALL_ROOT)/etc/default
-	cp etc/l2tp-ipsec-vpn-daemon.init $(INSTALL_ROOT)/etc/init.d/l2tp-ipsec-vpn-daemon;
-	cp etc/l2tp-ipsec-vpn-daemon.default $(INSTALL_ROOT)/etc/default/l2tp-ipsec-vpn-daemon;
-	chmod +x $(INSTALL_ROOT)/etc/init.d/l2tp-ipsec-vpn-daemon;
+	cp etc/l2tp-ipsec-vpn-daemon.init $(INSTALL_ROOT)$(INITRD_DIR)/l2tp-ipsec-vpn-daemon
+	cp etc/l2tp-ipsec-vpn-daemon.default $(INSTALL_ROOT)/etc/default/l2tp-ipsec-vpn-daemon
+	chmod +x $(INSTALL_ROOT)$(INITRD_DIR)/l2tp-ipsec-vpn-daemon
 
-	@if [ "$${INSTALL_ROOT}" = "" ]; then \
-      update-rc.d l2tp-ipsec-vpn-daemon defaults >/dev/null; \
-	   service l2tp-ipsec-vpn-daemon start; \
- 	fi
+ifneq (,$(ADD_INITD))
+ifeq ($(strip $(INSTALL_ROOT)),)
+		$(ADD_INITD) >/dev/null
+		service l2tp-ipsec-vpn-daemon start
+endif
+endif
 
 # uninstall
 uninstall: nbproject/qt-${CONF}.mk
-	@if [ -x "/etc/init.d/l2tp-ipsec-vpn-daemon" ]; then \
+	@if [ -x "$(INITRD_DIR)/l2tp-ipsec-vpn-daemon" ]; then \
 		service l2tp-ipsec-vpn-daemon stop; \
-		update-rc.d -f l2tp-ipsec-vpn-daemon remove >/dev/null; \
-		rm -f /etc/init.d/l2tp-ipsec-vpn-daemon; \
+		$(REMOVE_INITD) >/dev/null; \
+		rm -f $(INITRD_DIR)/l2tp-ipsec-vpn-daemon; \
 		rm -f /etc/default/l2tp-ipsec-vpn-daemon; \
 	fi
 	rm -rf $(INSTALL_ROOT)/var/run/L2tpIPsecVpnControlDaemon
