@@ -22,6 +22,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+QMAKE := $(shell if [ -f /usr/bin/qmake ]; then echo "qmake"; else echo "qmake-qt4"; fi)
+
 # default configuration is release
 DEFAULTCONF=Release
 
@@ -117,6 +119,6 @@ help:
 	@echo ""
 
 nbproject/qt-${CONF}.mk: nbproject/qt-${CONF}.pro
-	qmake-qt4 -o qttmp-${CONF}.mk -after "OBJECTS_DIR=${BUILDDIR}" "DESTDIR=${DISTDIR}" nbproject/qt-${CONF}.pro
+	${QMAKE} -o qttmp-${CONF}.mk -after "OBJECTS_DIR=${BUILDDIR}" "DESTDIR=${DISTDIR}" nbproject/qt-${CONF}.pro
 	mv -f qttmp-${CONF}.mk nbproject/qt-${CONF}.mk
 
