@@ -1,3 +1,7 @@
+0.9.9
+ - to be comapible with more linux distributions use service command 
+   instead of invoke-rc.d command to start and stop runlevel services
+
 0.9.8
  - new commands CMD_WRITE_CONNECTIONNAME_INFO and 
    CMD_WRITE_DEFAULT_GATEWAY_INFO
