@@ -51,7 +51,8 @@ else
    endif
 endif
 
-INITRD_DIR := $(firstword $(wildcard /etc/rc.d/init.d /etc/init.d))
+INITRD_DIR  := $(firstword $(wildcard /etc/rc.d/init.d /etc/init.d))
+DEFAULT_DIR := $(firstword $(wildcard /etc/sysconfig /etc/default))
 
 # build
 build: nbproject/qt-${CONF}.mk
@@ -63,7 +64,7 @@ install: nbproject/qt-${CONF}.mk
 	mkdir -p $(INSTALL_ROOT)$(INITRD_DIR)
 	mkdir -p $(INSTALL_ROOT)/etc/default
 	cp etc/l2tp-ipsec-vpn-daemon.init $(INSTALL_ROOT)$(INITRD_DIR)/l2tp-ipsec-vpn-daemon
-	cp etc/l2tp-ipsec-vpn-daemon.default $(INSTALL_ROOT)/etc/default/l2tp-ipsec-vpn-daemon
+	cp etc/l2tp-ipsec-vpn-daemon.default $(INSTALL_ROOT)$(DEFAULT_DIR)/l2tp-ipsec-vpn-daemon
 	chmod +x $(INSTALL_ROOT)$(INITRD_DIR)/l2tp-ipsec-vpn-daemon
 
 ifneq (,$(ADD_INITD))
@@ -79,7 +80,7 @@ uninstall: nbproject/qt-${CONF}.mk
 		service l2tp-ipsec-vpn-daemon stop; \
 		$(REMOVE_INITD) >/dev/null; \
 		rm -f $(INITRD_DIR)/l2tp-ipsec-vpn-daemon; \
-		rm -f /etc/default/l2tp-ipsec-vpn-daemon; \
+		rm -f $(DEFAULT_DIR)/l2tp-ipsec-vpn-daemon; \
 	fi
 	rm -rf $(INSTALL_ROOT)/var/run/L2tpIPsecVpnControlDaemon
 	make -f nbproject/qt-${CONF}.mk uninstall
