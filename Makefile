@@ -62,7 +62,7 @@ build: nbproject/qt-${CONF}.mk
 install: nbproject/qt-${CONF}.mk
 	make -f nbproject/qt-${CONF}.mk install
 	mkdir -p $(INSTALL_ROOT)$(INITRD_DIR)
-	mkdir -p $(INSTALL_ROOT)/etc/default
+	mkdir -p $(INSTALL_ROOT)$(DEFAULT_DIR)
 	cp etc/l2tp-ipsec-vpn-daemon.init $(INSTALL_ROOT)$(INITRD_DIR)/l2tp-ipsec-vpn-daemon
 	cp etc/l2tp-ipsec-vpn-daemon.default $(INSTALL_ROOT)$(DEFAULT_DIR)/l2tp-ipsec-vpn-daemon
 	chmod +x $(INSTALL_ROOT)$(INITRD_DIR)/l2tp-ipsec-vpn-daemon

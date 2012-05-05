@@ -1,7 +1,9 @@
 l2tp-ipsec-vpn-daemon (0.9.9-0ubuntu1~ppa1~precise1) precise; urgency=low
 
   * New upstream release
-    - to be comapible with more linux distributions use service command 
+    - init script is now usable for various linux distributions, not only for 
+      debian/ubuntu
+    - to be compatible with more linux distributions use service command 
       instead of invoke-rc.d command to start and stop runlevel services
 
  -- Werner Jaeger <werner_jaeger@web.de>  Thu, 3 Apr 2012 14:38:49 +0200

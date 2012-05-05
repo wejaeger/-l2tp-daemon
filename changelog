@@ -1,5 +1,7 @@
 0.9.9
- - to be comapible with more linux distributions use service command 
+ - init script is now usable for various linux distributions, not only for 
+   debian/ubuntu
+ - to be compatible with more linux distributions use service command 
    instead of invoke-rc.d command to start and stop runlevel services
 
 0.9.8
