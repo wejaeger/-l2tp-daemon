@@ -37,7 +37,7 @@ GENDIR = src/generated
 DISTDIR = dist/${CONF}
 
 # Distribution specific configurations
-QMAKE      := $(shell if [ -f /usr/bin/qmake ]; then echo "qmake"; else echo "qmake-qt4"; fi)
+QMAKE      := $(firstword $(wildcard /usr/bin/qmake /usr/bin/qmake-qt4))
 CHKCONFIG  := $(wildcard /sbin/chkconfig)
 UPDATE_RCD := $(wildcard /usr/sbin/update-rc.d)
 
@@ -52,7 +52,10 @@ else
 endif
 
 INITRD_DIR  := $(firstword $(wildcard /etc/rc.d/init.d /etc/init.d))
-DEFAULT_DIR := $(firstword $(wildcard /etc/sysconfig /etc/default))
+ISDEBIAN    := $(wildcard /etc/debian_version)
+ifneq (,$(ISDEBIAN))
+   DEFAULT_DIR := $(wildcard /etc/default)
+endif
 
 # build
 build: nbproject/qt-${CONF}.mk
@@ -62,10 +65,12 @@ build: nbproject/qt-${CONF}.mk
 install: nbproject/qt-${CONF}.mk
 	make -f nbproject/qt-${CONF}.mk install
 	mkdir -p $(INSTALL_ROOT)$(INITRD_DIR)
-	mkdir -p $(INSTALL_ROOT)$(DEFAULT_DIR)
 	cp etc/l2tp-ipsec-vpn-daemon.init $(INSTALL_ROOT)$(INITRD_DIR)/l2tp-ipsec-vpn-daemon
-	cp etc/l2tp-ipsec-vpn-daemon.default $(INSTALL_ROOT)$(DEFAULT_DIR)/l2tp-ipsec-vpn-daemon
 	chmod +x $(INSTALL_ROOT)$(INITRD_DIR)/l2tp-ipsec-vpn-daemon
+ifneq (,$(DEFAULT_DIR))
+	mkdir -p $(INSTALL_ROOT)$(DEFAULT_DIR)
+	cp etc/l2tp-ipsec-vpn-daemon.default $(INSTALL_ROOT)$(DEFAULT_DIR)/l2tp-ipsec-vpn-daemon
+endif
 
 ifneq (,$(ADD_INITD))
 ifeq ($(strip $(INSTALL_ROOT)),)
@@ -80,8 +85,10 @@ uninstall: nbproject/qt-${CONF}.mk
 		service l2tp-ipsec-vpn-daemon stop; \
 		$(REMOVE_INITD) >/dev/null; \
 		rm -f $(INITRD_DIR)/l2tp-ipsec-vpn-daemon; \
-		rm -f $(DEFAULT_DIR)/l2tp-ipsec-vpn-daemon; \
 	fi
+ifneq (,$(DEFAULT_DIR))
+	rm -f $(DEFAULT_DIR)/l2tp-ipsec-vpn-daemon
+endif
 	rm -rf $(INSTALL_ROOT)/var/run/L2tpIPsecVpnControlDaemon
 	make -f nbproject/qt-${CONF}.mk uninstall
 
