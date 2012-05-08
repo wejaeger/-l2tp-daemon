@@ -168,8 +168,6 @@ void VpnClientConnection::readyRead()
                                     if (iChownResult)
                                        result = ERR_CHOWN_VPN_LOG_PIPE;
                                  }
-                                 else
-                                    result = ERR_CHOWN_VPN_LOG_PIPE;
                               }
                               else
                                  result = ERR_CREATE_VPN_LOG_PIPE;
