@@ -22,13 +22,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QFile>
-#include <QByteArray>
-#include <QProcess>
-
 #include <fcntl.h>
 #include <signal.h>
 #include <syslog.h>
+#include <unistd.h>
+
+#include <QFile>
+#include <QByteArray>
+#include <QProcess>
 
 #include "VpnControlDaemon.h"
 #include "VpnControlDaemonApplication.h"

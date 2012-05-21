@@ -21,14 +21,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <QCoreApplication>
-#include <QLocalSocket>
-#include <QFile>
-
 #include <fcntl.h>
 #include <pwd.h>
 #include <syslog.h>
 #include <sys/stat.h>
+#include <unistd.h>
+
+#include <QCoreApplication>
+#include <QLocalSocket>
+#include <QFile>
 
 #include "VpnClientConnection.h"
 
