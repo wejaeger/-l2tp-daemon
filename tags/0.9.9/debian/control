@@ -1,0 +1,21 @@
+Source: l2tp-ipsec-vpn-daemon
+Section: net
+Priority: optional
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Build-Depends: debhelper (>= 8.0), libqt4-dev (>= 4.6.2), qt4-qmake (>= 4.6.2)
+Standards-Version: 3.9.3
+Homepage: https://launchpad.net/l2tp-ipsec-vpn
+
+Package: l2tp-ipsec-vpn-daemon
+Architecture: linux-any
+Depends: openswan (>= 2.6.23),
+         xl2tpd (>= 1.2.5),
+         ${misc:Depends},
+         ${shlibs:Depends}
+Description: daemon for L2tpIPsecVpn GUI
+ This daemon is exclusively used by the L2TP over IPsec Manager GUI
+ application in order to execute openswan and xl2tp commands as root
+ on behalf of the GUI client.
+ .
+ This daemon is only useful in combination with the GUI client
+ installed with the l2tp-ipsec-vpn package.
